@@ -9,3 +9,6 @@ Struktur:
                             Der Charakter bewegt sich in dem der Spieler seine limitierte Anzahl an Bewegungskarten
                             benutzt. Das Projekt heißt 'Jumper'. |
 | 03.10.2024 | ~10 min | alle | Git-Repo erstellt und alle eingeladen. |
+| 10.10.2024 | ~2h | alle | Projektinhalt besprochen und beschlossen den Plan zu ändern. Anstatt eines Platformers
+                            erstellen wir ein RPG mit retro-Aspekten. Wir haben zusätzlich weitere Spielaspekte
+                            besprochen, um die Erstellung der ersten Class (Entities.java) zu ermöglichen. |
