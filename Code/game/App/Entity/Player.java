@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Player extends Entity {
     private int strength, intelligence, dexterity, cuteness, body, level, health, fullHealth, healthMod;
@@ -19,21 +20,6 @@ public class Player extends Entity {
         this.keyHandler = keyHandler;
         setDefaultValues();
         getPlayerImage();
-    }
-    public void setDefaultValues(){
-        this.x = 100;
-        this.y = 100;
-        this.speed = 2;
-        direction = "down";
-        this.strength = 1;
-        this.intelligence = 1;
-        this.dexterity = 1;
-        this.cuteness = 10; // cuteness goes down over time (as the MC becomes more traumatised / bloodied)
-        this.body = 1;
-        this.level = 1;
-        this.healthMod = 3;
-        calculateFullHealth();
-        this.health = this.fullHealth;
     }
 
     // Setter
@@ -107,12 +93,11 @@ public class Player extends Entity {
         calculateFullHealth();
         heal(mod);
     }
-    @Override
-    void attack() {
-        System.out.println("You attack! (and do nothing lmao)");
-    }
 
     public void update() {
+        // update() changes the player's position depending on which button has been pressed. It is also responsible
+        // for cycling through the player sprites via updating spriteCounter and spriteNumber which then play a role
+        // in draw()
         if (keyHandler.upPressed || keyHandler.downPressed
                 || keyHandler.leftPressed || keyHandler.rightPressed) {
             if (keyHandler.upPressed) {
@@ -145,6 +130,9 @@ public class Player extends Entity {
 
     }
     public void draw(Graphics2D g2d) {
+        //This is responsible for the actual changing of sprites when the player does something. For example, it
+        // sets the player's image to the corresponding sprite, depending on the current spriteNumber. spriteNumber is
+        // continuously switched by update().
         BufferedImage image = null;
         switch (direction) {
             case "up":
@@ -185,18 +173,36 @@ public class Player extends Entity {
         g2d.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
     public void getPlayerImage(){
+        // This function simply assigns the player character his sprites. If we change a sprite or add one, then
+        // we must also implement that here. The variables below actually belong to the Entity super-class of Player
         try{
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
+            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
+            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
+            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
+            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
+            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
+            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
+            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
+            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
         }
         catch(IOException e){
             e.printStackTrace();
         }
     }
+    public void setDefaultValues(){
+        this.x = 100;
+        this.y = 100;
+        this.speed = 2;
+        direction = "down";
+        this.strength = 1;
+        this.intelligence = 1;
+        this.dexterity = 1;
+        this.cuteness = 10; // cuteness goes down over time (as the MC becomes more traumatised / bloodied)
+        this.body = 1;
+        this.level = 1;
+        this.healthMod = 3;
+        calculateFullHealth();
+        this.health = this.fullHealth;
+    }
+
 }

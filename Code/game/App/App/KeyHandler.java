@@ -12,6 +12,7 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        // If one of the following keys is pressed, it updates the corresponding variable
         int code = e.getKeyCode(); //each key on a keyboard has an associated keycode (e.g. A = 65)
         if (code == KeyEvent.VK_W) {upPressed = true;}
         if (code == KeyEvent.VK_S) {downPressed = true;}
@@ -21,6 +22,7 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        // If one of the following keys is pressed, it updates the corresponding variable
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_W) {upPressed = false;}
         if (code == KeyEvent.VK_S) {downPressed = false;}

@@ -27,6 +27,5 @@ public abstract class Entity {
     }
 
     // Other functions
-    abstract void attack();
 
 }

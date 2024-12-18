@@ -7,9 +7,6 @@ Arbeitspakete:
         create setters and getters accordingly. You'll have to change direct calls to some variables to the
         getter/setter, so keep an eye out if an error pops up in a different class.
 
-    add comments to functions - High Importance:
-        Tell Taliesin to do this, since he wrote the initial framework. The code is uncommented and that is not good
-
     create collision - High Importance:
         Walls aren't actually walls right now. As they are now, they only work as background images
 
