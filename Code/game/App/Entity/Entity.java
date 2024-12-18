@@ -29,8 +29,4 @@ public abstract class Entity {
     // Other functions
     abstract void attack();
 
-
-    // main
-    public static void main(String[] args) {
-    }
 }
