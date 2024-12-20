@@ -23,6 +23,12 @@ public class Player extends Entity {
         screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize/2);
         screenY = gamePanel.screenHeight/2 - (gamePanel.tileSize/2);
 
+        solidArea = new Rectangle();
+        solidArea.x =8;
+        solidArea.y=16;
+        solidArea.width=32;
+        solidArea.height=32;
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -109,20 +115,39 @@ public class Player extends Entity {
                 || keyHandler.leftPressed || keyHandler.rightPressed) {
             if (keyHandler.upPressed) {
                 direction = "up";
-                this.worldY -= this.speed;
             }
             if (keyHandler.downPressed) {
                 direction = "down";
-                this.worldY += this.speed;
             }
             if (keyHandler.leftPressed) {
                 direction = "left";
-                this.worldX -= this.speed;
             }
             if (keyHandler.rightPressed) {
                 direction = "right";
-                this.worldX += this.speed;
             }
+
+            //CHECK TILE COLLISION
+            collisionOn =false;
+            gamePanel.collisionChecker.checkTile(this);
+
+            if(!collisionOn){
+
+                switch (direction){
+                    case "up":
+                        this.worldY -= this.speed;
+                        break;
+                    case "down":
+                        this.worldY += this.speed;
+                        break;
+                    case "left":
+                        this.worldX -= this.speed;
+                        break;
+                    case "right":
+                        this.worldX += this.speed;
+                        break;
+                }
+            }
+
             spriteCounter++;
             if (spriteCounter > 30) {
                 if (spriteNumber == 1) {
