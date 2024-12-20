@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyHandler);
     TileManager tileManager = new TileManager(this); //responsible for the game-map being rendered
 
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
