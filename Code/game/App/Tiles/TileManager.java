@@ -20,9 +20,9 @@ public class TileManager {
         // generation copies
         this.gamePanel = gamePanel;
         tiles = new Tile[10]; //check later if we can use an ArrayList for this instead
-        mapTileNumber = new int[gamePanel.maxScreenCol][gamePanel.maxScreenRow];
+        mapTileNumber = new int[gamePanel.maxWorldCol][gamePanel.maxWorldRow];
         getTileImage();
-        loadMap("/maps/map"); //current map is a placeholder
+        loadMap("/maps/BigWorldMap"); //current map is a placeholder
     }
 
     public void getTileImage() {
@@ -31,14 +31,19 @@ public class TileManager {
         try {
             tiles[0] = new Tile();
             tiles[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+
             tiles[1] = new Tile();
             tiles[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
+
             tiles[2] = new Tile();
             tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
+
             tiles[3] = new Tile();
             tiles[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+
             tiles[4] = new Tile();
             tiles[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -48,17 +53,28 @@ public class TileManager {
         //This function simply draws the tiles onto the screen. It uses four variables to determine the tile(col & row)
         // and location (x & y). The loop is based on (row < gamePanel.maxScreenRow) because col is reset within the
         // while loop whenever it reaches the maximum. This is done so that it prints all columns for each row indent.
-        int col = 0, row = 0, x = 0, y = 0;
-        while (row < gamePanel.maxScreenRow) {
+        int col = 0, row = 0;
+        while (row < gamePanel.maxWorldRow) {
             int tileNumber = mapTileNumber[col][row];
-            g2d.drawImage(tiles[tileNumber].image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+
+            int worldX = col * gamePanel.tileSize;
+            int worldY = row * gamePanel.tileSize;
+            int screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
+            int screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
+
+            if(worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.player.screenX &&
+               worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX &&
+               worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY &&
+               worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY) {
+
+                g2d.drawImage(tiles[tileNumber].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+            }
             col++;
-            x += gamePanel.tileSize;
-            if (col >= gamePanel.maxScreenCol) {
+
+            if (col >= gamePanel.maxWorldCol) {
                 col = 0;
-                x = 0;
                 row++;
-                y += gamePanel.tileSize;
+
             }
         }
     }
@@ -70,15 +86,15 @@ public class TileManager {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0, row = 0;
-            while (col < gamePanel.maxScreenCol && row < gamePanel.maxScreenRow) {
+            while (col < gamePanel.maxWorldCol && row < gamePanel.maxWorldRow) {
                 String line = br.readLine();
-                while (col < gamePanel.maxScreenCol) {
+                while (col < gamePanel.maxWorldCol) {
                     String[] numbers = line.split(" ");
                     int number = Integer.parseInt(numbers[col]);
                     mapTileNumber[col][row] = number;
                     col++;
                 }
-                if (col == gamePanel.maxScreenCol) {
+                if (col == gamePanel.maxWorldCol) {
                     col = 0;
                     row++;
                 }

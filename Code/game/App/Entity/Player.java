@@ -13,11 +13,16 @@ public class Player extends Entity {
     private int strength, intelligence, dexterity, cuteness, body, level, health, fullHealth, healthMod;
     public GamePanel gamePanel;
     public KeyHandler keyHandler;
+    public final int screenX;
+    public final int screenY;
 
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
+        screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize/2);
+        screenY = gamePanel.screenHeight/2 - (gamePanel.tileSize/2);
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -48,6 +53,8 @@ public class Player extends Entity {
     public int getLevel() {return this.level;}
     public int getHealth() {return this.health;}
     public int getFullHealth() {return this.fullHealth;}
+    public int getScreenX() { return this.screenX;}
+    public int getScreenY() { return this.screenY;}
 
     // Additional Functions
     public void levelUp() {
@@ -102,19 +109,19 @@ public class Player extends Entity {
                 || keyHandler.leftPressed || keyHandler.rightPressed) {
             if (keyHandler.upPressed) {
                 direction = "up";
-                this.y -= this.speed;
+                this.worldY -= this.speed;
             }
             if (keyHandler.downPressed) {
                 direction = "down";
-                this.y += this.speed;
+                this.worldY += this.speed;
             }
             if (keyHandler.leftPressed) {
                 direction = "left";
-                this.x -= this.speed;
+                this.worldX -= this.speed;
             }
             if (keyHandler.rightPressed) {
                 direction = "right";
-                this.x += this.speed;
+                this.worldX += this.speed;
             }
             spriteCounter++;
             if (spriteCounter > 30) {
@@ -170,7 +177,7 @@ public class Player extends Entity {
             default:
                 break;
         }
-        g2d.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2d.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
     public void getPlayerImage(){
         // This function simply assigns the player character his sprites. If we change a sprite or add one, then
@@ -190,8 +197,8 @@ public class Player extends Entity {
         }
     }
     public void setDefaultValues(){
-        this.x = 100;
-        this.y = 100;
+        this.worldX = gamePanel.tileSize * 23; // starting position
+        this.worldY = gamePanel.tileSize * 21;
         this.speed = 2;
         direction = "down";
         this.strength = 1;
