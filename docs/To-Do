@@ -1,0 +1,27 @@
+Card Jumper - Programming 1 Gruppenprojekt
+
+Arbeitspakete:
+
+    clean up code - High Importance:
+        Go through each class and ensure that all variables are initialised correctly (private / protected) and
+        create setters and getters accordingly. You'll have to change direct calls to some variables to the
+        getter/setter, so keep an eye out if an error pops up in a different class.
+
+    create collision - High Importance:
+        Walls aren't actually walls right now. As they are now, they only work as background images
+
+    add 'objects' to the game - Medium Importance:
+        Objects are necessary for one of the goals of the Minimally Viable Product. This package is a lot of work
+        so do not expect to finish it immediately. It might also require the world map or a placeholder for it to
+        already have been created.
+        The goals are object placement and object interaction
+
+    create sprites - Low Importance:
+        The game needs its own sprites for the player. The sprites for the map don't need to be updated anytime soon
+        and can remain as placeholders.
+
+    prepare the Entity class and its children for the game - Low Importance:
+        Right now, we should focus on getting the game-physics to work before we work on concepts such as battles and
+        hp. Though, if you have the time, prepare the Entity class and all classes that are connected to it for the
+        gameplay mechanics by adding the necessary variables (such as hp for example). Do not forget to create setters
+        and getters.
