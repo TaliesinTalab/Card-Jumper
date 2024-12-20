@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
     private String name;
-    public int x, y, speed;
+    public int worldX, worldY, speed;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public String direction;
     public int spriteCounter = 0;
@@ -12,18 +12,18 @@ public abstract class Entity {
 
     // Setters
     public void setName(String new_name) {this.name = new_name;}
-    public void setY_coordinate(int new_y) {this.y = new_y;}
-    public void setX_coordinate(int new_x) {this.x = new_x;}
+    public void setY_coordinate(int new_y) {this.worldY = new_y;}
+    public void setX_coordinate(int new_x) {this.worldX = new_x;}
 
     // Getters
     public String getName() {
         return name;
     }
     public int getY_coordinate() {
-        return y;
+        return worldY;
     }
     public int getX_coordinate() {
-        return x;
+        return worldX;
     }
 
     // Other functions
