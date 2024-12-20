@@ -1,10 +1,12 @@
 package game.App.App;
 
 import game.App.Entity.Player;
+import game.App.Object.SuperObject;
 import game.App.Tiles.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
@@ -19,8 +21,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread; // We are using threads so that the game continues even if the player is idle
     KeyHandler keyHandler = new KeyHandler(); // This is needed for us to read inputs
+    private AssetHandler assetHandler = new AssetHandler(this);
     Player player = new Player(this, keyHandler);
     TileManager tileManager = new TileManager(this); //responsible for the game-map being rendered
+    private SuperObject[] placedObjects = new SuperObject[10]; //handles up to 10 objects
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -28,6 +32,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+    }
+
+    public void setupGame() {
+        assetHandler.setObject();
     }
 
     public void startGameThread() {
@@ -74,5 +82,13 @@ public class GamePanel extends JPanel implements Runnable {
         tileManager.draw(g2d);
         player.draw(g2d);
         g2d.dispose();
+    }
+
+    public SuperObject[] getPlacedObjects() {
+        return placedObjects;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
