@@ -26,6 +26,7 @@ public class Player extends Entity {
         screenX = gamePanel.getScreenWidth()/2 - (gamePanel.getTileSize()/2);
         screenY = gamePanel.getScreenHeight()/2 - (gamePanel.getTileSize()/2);
 
+        //It sets the exact area of the player which area is solid
         setSolidArea(new Rectangle());
         setSolidAreaX(8);
         setSolidAreaY(16);
@@ -162,10 +163,10 @@ public class Player extends Entity {
                 setDirection("right");
             }
 
-            //CHECK TILE COLLISION
+            //check the collision
             setCollisionOn(false);
             gamePanel.getCollisionChecker().checkTile(this);
-
+            //player can only move if collision is false
             if(!getCollisionOn()){
 
                 switch (getDirection()){
