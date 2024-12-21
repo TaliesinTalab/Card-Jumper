@@ -15,4 +15,11 @@ Struktur:
 | 21.10.2024 | ~20 min | Talab | Git-Repo strukturiert, ReadMe geupdatted, Anfangsform von game.game.App.App.Entities.game.game.App.App.Entities.java
                             hochgeladen |
 | 19.11.2024 | ~30 min | Talab | game.game.App.App.Entities.Player class erstellt, game.game.App.App.Entities.game.game.App.App.Entities & Main (jetzt game.game.App.App.game.game.App.App) class bearbeitet |
-| 18.12.2024 | ~xx min | alle  |
+| 18.12.2024 | ~2 h | Talab  | Game-foundation (Java Classes: App, GamePanel, KeyHandler, Player, Tile, TileManager)
+                                erstellt mit features (Player Character, Bewegung, + simple game-map) |
+| 18.12.2024 | ~60 min | alle  | Team meeting für Unterteilung der Arbeit, es wurde beschlossen wer welchen der nächsten Arbeitspackete machen soll |
+| 20.12.2024 | ~2h | Nazari | Einer größerer Mape wurde erstellt. Die Startposition vom Player ist in der Mitte, sodass sich die Mape bewegt und der Player in einer festen Position beleibt.
+                              Damit das Spiel flüssig läuft, wird nur 17*17 Bereich der Mape geladen.
+| 20.12.2024 | 120 min | Wang | Collision erstellt
+| 21.12.2024 | ~90 min | Talab | Error-checking und coding conventions überall korrigiert (comments, getters & setters), placeholder world-map erstellt
+| 21.12.2024 | ~15 min | Wang | Collision verbesserung + Kommentar hinzufügt
