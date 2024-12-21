@@ -70,6 +70,9 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject[] getPlacedObjects() {
         return placedObjects;
     }
+    public AssetHandler getAssetHandler() {
+        return assetHandler;
+    }
 
     //Setters
     public void setPlacedObjects(SuperObject[] placedObjects) {

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class ObjectKey extends SuperObject{
     public ObjectKey(){
-        setName("key");
+        setName("Key");
 
         try {
             setImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/key.png"))));
@@ -16,7 +16,7 @@ public class ObjectKey extends SuperObject{
     }
 
     public ObjectKey(ObjectKey key){
-        setName("key");
+        setName("Key");
 
         setWorldX(key.getWorldX());
         setWorldY(key.getWorldY());

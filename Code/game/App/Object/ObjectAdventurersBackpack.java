@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class ObjectAdventurersBackpack extends SuperObject {
     public ObjectAdventurersBackpack(){
-        setName("adventurersBackpack");
+        setName("Adventurer's Backpack");
 
         try {
             setImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/adventurers_backpack.png"))));
@@ -16,7 +16,7 @@ public class ObjectAdventurersBackpack extends SuperObject {
     }
 
     public ObjectAdventurersBackpack(ObjectAdventurersBackpack adventurersBackpack){
-        setName("adventurersBackpack");
+        setName("Adventurer's Backpack");
 
         setWorldX(adventurersBackpack.getWorldX());
         setWorldY(adventurersBackpack.getWorldY());

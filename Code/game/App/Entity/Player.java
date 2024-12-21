@@ -18,6 +18,7 @@ public class Player extends Entity {
     private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     private int spriteCounter = 0;
     private int spriteNumber = 1;
+    private int keys = 0;
 
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -32,6 +33,10 @@ public class Player extends Entity {
         setSolidAreaY(20);
         setSolidAreaWidth(30);
         setSolidAreaHeight(28);
+
+        //preserves the default value of solidArea
+        setSolidAreaDefaultX(getSolidArea().x);
+        setSolidAreaDefaultY(getSolidArea().y);
 
         setDefaultValues();
         getPlayerImage();
@@ -163,9 +168,14 @@ public class Player extends Entity {
                 setDirection("right");
             }
 
-            //check the collision
+            //check tile collision
             setCollisionOn(false);
             gamePanel.getCollisionChecker().checkTile(this);
+
+            //check object collision
+            int objectIndex = gamePanel.getCollisionChecker().checkObject(this, true);
+            pickUpObject(objectIndex);
+
             //player can only move if collision is false
             if(!getCollisionOn()){
 
@@ -197,6 +207,28 @@ public class Player extends Entity {
             }
         }
 
+    }
+
+    /**
+     * responsible for item pickup
+     */
+    public void pickUpObject(int index) {
+        if(index != 999) {
+            String objectName = gamePanel.getPlacedObjects()[index].getName();
+
+            switch (objectName) {
+                case "Key":
+                    keys++;
+                    gamePanel.getAssetHandler().placeObjectAtIndex(null, index);
+                    break;
+                case "Door":
+                    if(keys > 0) {
+                        gamePanel.getAssetHandler().placeObjectAtIndex(null, index);
+                        keys--;
+                    }
+                    break;
+            }
+        }
     }
 
     /**

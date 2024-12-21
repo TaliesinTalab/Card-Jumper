@@ -2,7 +2,7 @@ package game.App.Object;
 
 import game.App.App.GamePanel;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 //SuperClass which is never instantiated (could be made abstract)
@@ -11,6 +11,8 @@ public class SuperObject {
     private String name;
     private boolean collision = false;
     private int worldX, worldY;
+    private Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    private int solidAreaDefaultX = 0, solidAreaDefaultY = 0;
 
     /**
      * Draws objects on screen
@@ -44,6 +46,15 @@ public class SuperObject {
     public int getWorldY() {
         return worldY;
     }
+    public Rectangle getSolidArea() {
+        return solidArea;
+    }
+    public int getSolidAreaDefaultX() {
+        return solidAreaDefaultX;
+    }
+    public int getSolidAreaDefaultY() {
+        return solidAreaDefaultY;
+    }
 
     //Setter
     public void setImage(BufferedImage image) {
@@ -61,4 +72,9 @@ public class SuperObject {
     public void setWorldY(int worldY) {
         this.worldY = worldY;
     }
+    public void setSolidAreaX(int x) {solidArea.x = x;}
+    public void setSolidAreaY(int y) {solidArea.y = y;}
+    public void setSolidAreaWidth(int w) {solidArea.width = w;}
+    public void setSolidAreaHeight(int h) {solidArea.height = h;}
+    public void setSolidArea(Rectangle rect) {solidArea = rect;}
 }

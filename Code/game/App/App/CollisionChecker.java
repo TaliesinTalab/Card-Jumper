@@ -1,6 +1,9 @@
 package game.App.App;
 
 import game.App.Entity.Entity;
+import game.App.Object.SuperObject;
+
+import java.util.Arrays;
 
 public class CollisionChecker {
     private GamePanel gamePanel;
@@ -8,6 +11,7 @@ public class CollisionChecker {
     public CollisionChecker(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
+
     public void checkTile(Entity entity){
 
         int entityLeftWorldX = entity.getWorldX() + entity.getSolidArea().x;
@@ -63,7 +67,70 @@ public class CollisionChecker {
                 }
                 break;
         }
-        }
-
     }
 
+    /**
+     * checks collision between player and object
+     */
+    public int checkObject(Entity entity, boolean player) {
+        int index = 999, objectIndex = 0;
+
+        for(SuperObject object : gamePanel.getPlacedObjects()) {
+            if(object != null) {
+                //Entity's solidAreaPosition
+                entity.setSolidAreaX(entity.getWorldX() + entity.getSolidArea().x);
+                entity.setSolidAreaY(entity.getWorldY() + entity.getSolidArea().y);
+
+                //Object's SolidAreaPosition
+                object.setSolidAreaX(object.getWorldX() + object.getSolidArea().x);
+                object.setSolidAreaY(object.getWorldY() + object.getSolidArea().y);
+
+                switch(entity.getDirection()) {
+                    case "up":
+                        entity.setSolidAreaY(entity.getSolidArea().y - entity.getSpeed());
+                        if(entity.getSolidArea().intersects(object.getSolidArea())) {
+                            if(object.getCollision()) {
+                                entity.setCollisionOn(true);
+                            }
+                            if(player) index = objectIndex;
+                        }
+                        break;
+                        case "down":
+                            entity.setSolidAreaY(entity.getSolidArea().y + entity.getSpeed());
+                            if(entity.getSolidArea().intersects(object.getSolidArea())) {
+                                if(object.getCollision()) {
+                                    entity.setCollisionOn(true);
+                                }
+                                if(player) index = objectIndex;
+                            }
+                            break;
+                            case "left":
+                                entity.setSolidAreaX(entity.getSolidArea().x - entity.getSpeed());
+                                if(entity.getSolidArea().intersects(object.getSolidArea())) {
+                                    if(object.getCollision()) {
+                                        entity.setCollisionOn(true);
+                                    }
+                                    if(player) index = objectIndex;
+                                }
+                                break;
+                                case "right":
+                                    entity.setSolidAreaX(entity.getSolidArea().x + entity.getSpeed());
+                                    if(entity.getSolidArea().intersects(object.getSolidArea())) {
+                                        if(object.getCollision()) {
+                                            entity.setCollisionOn(true);
+                                        }
+                                        if(player) index = objectIndex;
+                                    }
+                                    break;
+                }
+                entity.setSolidAreaX(entity.getSolidAreaDefaultX());
+                entity.setSolidAreaY(entity.getSolidAreaDefaultY());
+
+                object.setSolidAreaX(object.getSolidAreaDefaultX());
+                object.setSolidAreaY(object.getSolidAreaDefaultY());
+            }
+            objectIndex++;
+        }
+        return index;
+    }
+}

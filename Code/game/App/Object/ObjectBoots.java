@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class ObjectBoots extends SuperObject {
     public ObjectBoots(){
-        setName("boots");
+        setName("Boots");
 
         try {
             setImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/boots.png"))));
@@ -16,7 +16,7 @@ public class ObjectBoots extends SuperObject {
     }
 
     public ObjectBoots(ObjectBoots boots){
-        setName("boots");
+        setName("Boots");
 
         setWorldX(boots.getWorldX());
         setWorldY(boots.getWorldY());
