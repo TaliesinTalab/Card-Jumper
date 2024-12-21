@@ -7,29 +7,30 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
+    private Thread gameThread; // We are using threads so that the game continues even if the player is idle
+    private KeyHandler keyHandler = new KeyHandler(); // This is needed for us to read inputs
+    private Player player = new Player(this, keyHandler);
+    private TileManager tileManager = new TileManager(this); //responsible for the game-map being rendered
+    private CollisionChecker collisionChecker = new CollisionChecker(this);
+
     // SCREEN SETTINGS
     private final int originalTileSize = 16; //16x16 pixel tile
     private final int scale = 3; //Tile-Size by three to make it look better on modern monitors
-    public final int tileSize = originalTileSize * scale; // actual tile size
-    public final int maxScreenCol = 16; // Biggest screen will show 16 tiles per column
-    public final int maxScreenRow = 12; // Biggest screen will show 16 tiles per row
-    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels
-    public final int screenHeight = tileSize * maxScreenRow;// 576 pixels
+    private final int tileSize = originalTileSize * scale; // actual tile size
+    private final int maxScreenCol = 16; // Biggest screen will show 16 tiles per column
+    private final int maxScreenRow = 12; // Biggest screen will show 16 tiles per row
+    private final int screenWidth = tileSize * maxScreenCol; // 768 pixels
+    private final int screenHeight = tileSize * maxScreenRow;// 576 pixels
 
     // WORLD SETTINGS
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
+    private final int maxWorldCol = 50;
+    private final int maxWorldRow = 50;
+    private final int worldWidth = tileSize * maxWorldCol;
+    private final int worldHeight = tileSize * maxWorldRow;
 
+    // GAME SETTINGS
     private final int fps = 60;
 
-    Thread gameThread; // We are using threads so that the game continues even if the player is idle
-    KeyHandler keyHandler = new KeyHandler(); // This is needed for us to read inputs
-    public Player player = new Player(this, keyHandler);
-    TileManager tileManager = new TileManager(this); //responsible for the game-map being rendered
-
-    public CollisionChecker collisionChecker = new CollisionChecker(this);
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -38,19 +39,52 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
+
+    // Getters
+    public int getTileSize() {
+        return tileSize;
+    }
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+    public TileManager getTileManager() {
+        return tileManager;
+    }
+    public int getMaxWorldCol() {
+        return maxWorldCol;
+    }
+    public int getMaxWorldRow() {
+        return maxWorldRow;
+    }
+    public Player getPlayer() {
+        return player;
+    }
+    public CollisionChecker getCollisionChecker() {
+        return collisionChecker;
+    }
+
+    // Other Methods
+
+    /**
+     * Starts the thread responsible to keep the game running, used in App.java
+     */
     public void startGameThread() {
-        //Starts the thread responsible to keep the game running, used in App.java
         gameThread = new Thread(this);
         gameThread.start();
     }
 
+    /**
+     *  This function acts as the main game-loop and will continue running until the gameThread is killed.
+     *          It first calculates how often to run the loop per second (drawInterval). The try-catch block within the loop
+     *          ensures that it is held to the update-amount per second. This is important because otherwise a single
+     *          button press might cause the player to fly in a direction due to the program having updated itself very
+     *          often in that short time frame.
+     */
     @Override
     public void run() {
-        // This function acts as the main game-loop and will continue running until the gameThread is killed.
-        // It first calculates how often to run the loop per second (drawInterval). The try-catch block within the loop
-        // ensures that it is held to the update-amount per second. This is important because otherwise a single
-        // button press might cause the player to fly in a direction due to the program having updated itself very
-        // often in that short time frame.
         double drawInterval = (double) 1000 /fps;
         double nextUpdate = System.currentTimeMillis() + drawInterval;
 
@@ -69,14 +103,16 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
     }
-
     public void update() {
         player.update();
     }
 
+    /**
+     * Responsible for actually 'drawing' the visuals on screen
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     public void paintComponent(Graphics g) {
-        //Responsible for actually 'drawing' the visuals on screen
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         tileManager.draw(g2d);

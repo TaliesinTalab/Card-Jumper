@@ -11,23 +11,26 @@ import java.util.Objects;
 
 public class Player extends Entity {
     private int strength, intelligence, dexterity, cuteness, body, level, health, fullHealth, healthMod;
-    public GamePanel gamePanel;
-    public KeyHandler keyHandler;
-    public final int screenX;
-    public final int screenY;
+    private GamePanel gamePanel;
+    private KeyHandler keyHandler;
+    private final int screenX;
+    private final int screenY;
+    private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+    private int spriteCounter = 0;
+    private int spriteNumber = 1;
 
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
-        screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize/2);
-        screenY = gamePanel.screenHeight/2 - (gamePanel.tileSize/2);
+        screenX = gamePanel.getScreenWidth()/2 - (gamePanel.getTileSize()/2);
+        screenY = gamePanel.getScreenHeight()/2 - (gamePanel.getTileSize()/2);
 
-        solidArea = new Rectangle();
-        solidArea.x =8;
-        solidArea.y=16;
-        solidArea.width=32;
-        solidArea.height=32;
+        setSolidArea(new Rectangle());
+        setSolidAreaX(8);
+        setSolidAreaY(16);
+        setSolidAreaWidth(32);
+        setSolidAreaHeight(32);
 
         setDefaultValues();
         getPlayerImage();
@@ -49,6 +52,22 @@ public class Player extends Entity {
     public void setBody(int body) {
         this.body = body;
     }
+    public void setDefaultValues(){
+        this.worldX = gamePanel.getTileSize() * 23; // starting position
+        this.worldY = gamePanel.getTileSize() * 21;
+        this.speed = 2;
+        setDirection("down");
+        this.strength = 1;
+        this.intelligence = 1;
+        this.dexterity = 1;
+        this.cuteness = 10; // cuteness goes down over time (as the MC becomes more traumatised / bloodied)
+        this.body = 1;
+        this.level = 1;
+        this.healthMod = 3;
+        calculateFullHealth();
+        this.health = this.fullHealth;
+    }
+
 
     // Getter
     public int getStrength() {return this.strength;}
@@ -61,6 +80,27 @@ public class Player extends Entity {
     public int getFullHealth() {return this.fullHealth;}
     public int getScreenX() { return this.screenX;}
     public int getScreenY() { return this.screenY;}
+
+    /**
+     * This function simply assigns the player character his sprites. If we change a sprite or add one, then
+     *          we must also implement that here. The variables below actually belong to the Entity super-class of Player
+     */
+    public void getPlayerImage(){
+        try{
+            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
+            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
+            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
+            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
+            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
+            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
+            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
+            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
 
     // Additional Functions
     public void levelUp() {
@@ -81,13 +121,9 @@ public class Player extends Entity {
     public void calculateFullHealth() {
         this.fullHealth = (this.body*2)+(this.level*5)+healthMod;
     }
-    // Returns the user back to their full health..
     public void healToFull() {
         this.health = this.fullHealth;
     }
-    // Heals the user by a specified amount.
-    //      e.g. a potion healing you by 10.
-    // args: int 'amount' is the amount that you will be healed by
     public void heal(int amount) {
         if (this.health + amount < this.fullHealth) {
             this.health += amount;
@@ -98,41 +134,41 @@ public class Player extends Entity {
             System.out.println("Healed to full health.");
         }
     }
-    // Is meant to be used for items that permanently increase the user's health.
-    //      e.g. a potion adding +4 to your full health
-    // args: int 'mod' is the amount that will be added to your hp
     public void increaseHealth(int mod) {
         this.healthMod += mod;
         calculateFullHealth();
         heal(mod);
     }
 
+    /**
+     * update() changes the player's position depending on which button has been pressed. It is also responsible
+     *          for cycling through the player sprites via updating spriteCounter and spriteNumber which then play a role
+     *          in draw()
+     */
     public void update() {
-        // update() changes the player's position depending on which button has been pressed. It is also responsible
-        // for cycling through the player sprites via updating spriteCounter and spriteNumber which then play a role
-        // in draw()
-        if (keyHandler.upPressed || keyHandler.downPressed
-                || keyHandler.leftPressed || keyHandler.rightPressed) {
-            if (keyHandler.upPressed) {
-                direction = "up";
+
+        if (keyHandler.getUpPressed() || keyHandler.getDownPressed()
+                || keyHandler.getLeftPressed() || keyHandler.getRightPressed()) {
+            if (keyHandler.getUpPressed()) {
+                setDirection("up");
             }
-            if (keyHandler.downPressed) {
-                direction = "down";
+            if (keyHandler.getDownPressed()) {
+                setDirection("down");
             }
-            if (keyHandler.leftPressed) {
-                direction = "left";
+            if (keyHandler.getLeftPressed()) {
+                setDirection("left");
             }
-            if (keyHandler.rightPressed) {
-                direction = "right";
+            if (keyHandler.getRightPressed()) {
+                setDirection("right");
             }
 
             //CHECK TILE COLLISION
-            collisionOn =false;
-            gamePanel.collisionChecker.checkTile(this);
+            setCollisionOn(false);
+            gamePanel.getCollisionChecker().checkTile(this);
 
-            if(!collisionOn){
+            if(!getCollisionOn()){
 
-                switch (direction){
+                switch (getDirection()){
                     case "up":
                         this.worldY -= this.speed;
                         break;
@@ -161,12 +197,15 @@ public class Player extends Entity {
         }
 
     }
+
+    /**
+     * This is responsible for the actual changing of sprites when the player does something. For example, it
+     *          sets the player's image to the corresponding sprite, depending on the current spriteNumber. spriteNumber is
+     *          continuously switched by update().
+     */
     public void draw(Graphics2D g2d) {
-        //This is responsible for the actual changing of sprites when the player does something. For example, it
-        // sets the player's image to the corresponding sprite, depending on the current spriteNumber. spriteNumber is
-        // continuously switched by update().
         BufferedImage image = null;
-        switch (direction) {
+        switch (getDirection()) {
             case "up":
                 if(spriteNumber == 1) {
                     image = up1;
@@ -202,39 +241,6 @@ public class Player extends Entity {
             default:
                 break;
         }
-        g2d.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2d.drawImage(image, screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
     }
-    public void getPlayerImage(){
-        // This function simply assigns the player character his sprites. If we change a sprite or add one, then
-        // we must also implement that here. The variables below actually belong to the Entity super-class of Player
-        try{
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
-            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
-            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
-            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-    public void setDefaultValues(){
-        this.worldX = gamePanel.tileSize * 23; // starting position
-        this.worldY = gamePanel.tileSize * 21;
-        this.speed = 2;
-        direction = "down";
-        this.strength = 1;
-        this.intelligence = 1;
-        this.dexterity = 1;
-        this.cuteness = 10; // cuteness goes down over time (as the MC becomes more traumatised / bloodied)
-        this.body = 1;
-        this.level = 1;
-        this.healthMod = 3;
-        calculateFullHealth();
-        this.health = this.fullHealth;
-    }
-
 }

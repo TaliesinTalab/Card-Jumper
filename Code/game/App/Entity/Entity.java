@@ -5,30 +5,45 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
     private String name;
-    public int worldX, worldY, speed;
-    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-    public String direction;
-    public int spriteCounter = 0;
-    public int spriteNumber = 1;
-    public Rectangle solidArea;
-    public boolean collisionOn = false;
+    protected int worldX, worldY, speed;
+    private Rectangle solidArea;
+    private boolean collisionOn = false;
+    private String direction;
 
     // Setters
     public void setName(String new_name) {this.name = new_name;}
-    public void setY_coordinate(int new_y) {this.worldY = new_y;}
-    public void setX_coordinate(int new_x) {this.worldX = new_x;}
+    public void setSolidArea(Rectangle new_solidArea) {solidArea = new_solidArea;}
+    public void setSolidAreaX(int x) {solidArea.x = x;}
+    public void setSolidAreaY(int y) {solidArea.y = y;}
+    public void setSolidAreaWidth(int w) {solidArea.width = w;}
+    public void setSolidAreaHeight(int h) {solidArea.height = h;}
+    public void setCollisionOn(boolean new_collision) {this.collisionOn = new_collision;}
+    public void setDirection(String new_direction) {this.direction = new_direction;}
+
 
     // Getters
     public String getName() {
         return name;
     }
-    public int getY_coordinate() {
+    public int getWorldY() {
         return worldY;
     }
-    public int getX_coordinate() {
+    public int getWorldX() {
         return worldX;
     }
+    public int getSpeed() {
+        return speed;
+    }
+    public Rectangle getSolidArea() {
+        return solidArea;
+    }
+    public boolean getCollisionOn() {
+        return collisionOn;
+    }
+    public String getDirection() {
+        return direction;
+    }
 
-    // Other functions
+    // Other Methods
 
 }
