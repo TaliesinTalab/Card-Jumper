@@ -1,6 +1,8 @@
 package game.App.App;
 
 import game.App.Entity.Player;
+import game.App.Object.ObjectKey;
+import game.App.Object.SuperObject;
 import game.App.Tiles.TileManager;
 
 import javax.swing.*;
@@ -28,6 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler(); // This is needed for us to read inputs
     public Player player = new Player(this, keyHandler);
     TileManager tileManager = new TileManager(this); //responsible for the game-map being rendered
+    private SuperObject[] placedObjects = new SuperObject[10]; //can hold up to 10 objects to be rendered
+    private AssetHandler assetHandler = new AssetHandler(this);
 
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public GamePanel() {
@@ -36,6 +40,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+    }
+
+    public void setupGame() {
+        assetHandler.setObject();
     }
 
     public void startGameThread() {
@@ -79,8 +87,35 @@ public class GamePanel extends JPanel implements Runnable {
         //Responsible for actually 'drawing' the visuals on screen
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        //TILE
         tileManager.draw(g2d);
+
+        //OBJECTS
+        for(SuperObject object : placedObjects) {
+            if (object != null) object.draw(g2d, this);
+        }
+
+        //PLAYER
         player.draw(g2d);
+
         g2d.dispose();
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public SuperObject[] getPlacedObjects() {
+        return placedObjects;
+    }
+
+    public void placeObjectAtIndex(SuperObject object, int Index) {
+        try {
+            if (Index < placedObjects.length) placedObjects[Index] = object;
+            else throw new ArrayIndexOutOfBoundsException();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
 }

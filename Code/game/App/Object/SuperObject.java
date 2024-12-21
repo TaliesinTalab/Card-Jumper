@@ -14,14 +14,14 @@ public class SuperObject {
 
     //draws objects on screen
     public void draw(Graphics2D g2d, GamePanel gamePanel) {
-        int screenX = worldX - gamePanel.getPlayer().getX_coordinate();
-        int screenY = worldY - gamePanel.getPlayer().getY_coordinate();
+        int screenX = worldX - gamePanel.getPlayer().getX_coordinate() + gamePanel.getPlayer().getScreenX();
+        int screenY = worldY - gamePanel.getPlayer().getY_coordinate() + gamePanel.getPlayer().getScreenY();
 
-        if(worldX + gamePanel.tileSize >  gamePanel.getPlayer().x &&
-                worldX - gamePanel.tileSize <  gamePanel.getPlayer().x &&
-                worldY + gamePanel.tileSize >  gamePanel.getPlayer().y &&
-                worldY - gamePanel.tileSize <  gamePanel.getPlayer().y)
-            g2d.drawImage(image, worldX, worldY, gamePanel.tileSize, gamePanel.tileSize, null);
+        if(worldX + gamePanel.tileSize >  gamePanel.getPlayer().getX_coordinate() - gamePanel.getPlayer().getScreenX() &&
+                worldX - gamePanel.tileSize <  gamePanel.getPlayer().getX_coordinate() + gamePanel.getPlayer().getScreenX() &&
+                worldY + gamePanel.tileSize >  gamePanel.getPlayer().getY_coordinate() - gamePanel.getPlayer().getScreenY() &&
+                worldY - gamePanel.tileSize <  gamePanel.getPlayer().getY_coordinate() + gamePanel.getPlayer().getScreenY())
+            g2d.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 
     public BufferedImage getImage() {
