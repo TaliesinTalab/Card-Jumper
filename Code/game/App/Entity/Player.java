@@ -28,10 +28,10 @@ public class Player extends Entity {
 
         //It sets the exact area of the player which area is solid
         setSolidArea(new Rectangle());
-        setSolidAreaX(8);
-        setSolidAreaY(16);
-        setSolidAreaWidth(32);
-        setSolidAreaHeight(32);
+        setSolidAreaX(9);
+        setSolidAreaY(20);
+        setSolidAreaWidth(30);
+        setSolidAreaHeight(28);
 
         setDefaultValues();
         getPlayerImage();
