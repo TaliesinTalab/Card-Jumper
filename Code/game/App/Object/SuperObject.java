@@ -12,54 +12,52 @@ public class SuperObject {
     private boolean collision = false;
     private int worldX, worldY;
 
-    //draws objects on screen
+    /**
+     * Draws objects on screen
+     */
     public void draw(Graphics2D g2d, GamePanel gamePanel) {
-        int screenX = worldX - gamePanel.getPlayer().getX_coordinate() + gamePanel.getPlayer().getScreenX();
-        int screenY = worldY - gamePanel.getPlayer().getY_coordinate() + gamePanel.getPlayer().getScreenY();
+        int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().getScreenX();
+        int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().getScreenY();
 
-        if(worldX + gamePanel.tileSize >  gamePanel.getPlayer().getX_coordinate() - gamePanel.getPlayer().getScreenX() &&
-                worldX - gamePanel.tileSize <  gamePanel.getPlayer().getX_coordinate() + gamePanel.getPlayer().getScreenX() &&
-                worldY + gamePanel.tileSize >  gamePanel.getPlayer().getY_coordinate() - gamePanel.getPlayer().getScreenY() &&
-                worldY - gamePanel.tileSize <  gamePanel.getPlayer().getY_coordinate() + gamePanel.getPlayer().getScreenY())
-            g2d.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        if(worldX + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldX() - gamePanel.getPlayer().getScreenX() &&
+                worldX - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().getScreenX() &&
+                worldY + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldY() - gamePanel.getPlayer().getScreenY() &&
+                worldY - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().getScreenY()) {
+
+            g2d.drawImage(image, screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+        }
     }
 
+    //Getter
     public BufferedImage getImage() {
         return image;
     }
-
     public String getName() {
         return name;
     }
-
-    public boolean isCollision() {
+    public boolean getCollision() {
         return collision;
     }
-
     public int getWorldX() {
         return worldX;
     }
-
     public int getWorldY() {
         return worldY;
     }
 
+    //Setter
     public void setImage(BufferedImage image) {
         this.image = image;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public void setCollision(boolean collision) {
         this.collision = collision;
     }
-
     public void setWorldX(int worldX) {
         this.worldX = worldX;
     }
-
     public void setWorldY(int worldY) {
         this.worldY = worldY;
     }

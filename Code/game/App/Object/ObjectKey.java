@@ -14,4 +14,17 @@ public class ObjectKey extends SuperObject{
             e.printStackTrace();
         }
     }
+
+    public ObjectKey(ObjectKey key){
+        setName("key");
+
+        setWorldX(key.getWorldX());
+        setWorldY(key.getWorldY());
+
+        try {
+            setImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/key.png"))));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

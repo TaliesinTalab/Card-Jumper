@@ -1,6 +1,7 @@
 package game.App.App;
 
 import game.App.Entity.Player;
+import game.App.Object.SuperObject;
 import game.App.Tiles.TileManager;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ public class GamePanel extends JPanel implements Runnable {
     private Player player = new Player(this, keyHandler);
     private TileManager tileManager = new TileManager(this); //responsible for the game-map being rendered
     private CollisionChecker collisionChecker = new CollisionChecker(this);
+    private SuperObject[] placedObjects = new SuperObject[10]; //Array of objects rendered in map
+    private AssetHandler assetHandler = new AssetHandler(this); //handles objects in placedObjects array
 
     // SCREEN SETTINGS
     private final int originalTileSize = 16; //16x16 pixel tile
@@ -39,7 +42,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-
     // Getters
     public int getTileSize() {
         return tileSize;
@@ -65,8 +67,23 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker getCollisionChecker() {
         return collisionChecker;
     }
+    public SuperObject[] getPlacedObjects() {
+        return placedObjects;
+    }
 
-    // Other Methods
+    //Setters
+    public void setPlacedObjects(SuperObject[] placedObjects) {
+        this.placedObjects = placedObjects;
+    }
+
+// Other Methods
+
+    /**
+     * Loads objects into the placedObjects Array
+     */
+    public void setupGame() {
+        assetHandler.setObject();
+    }
 
     /**
      * Starts the thread responsible to keep the game running, used in App.java
@@ -115,7 +132,16 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        //DRAW TILES
         tileManager.draw(g2d);
+
+        //DRAW OBJECTS
+        for (SuperObject object : placedObjects) {
+            if (object != null) object.draw(g2d, this);
+        }
+
+        //DRAW PLAYER
         player.draw(g2d);
         g2d.dispose();
     }
