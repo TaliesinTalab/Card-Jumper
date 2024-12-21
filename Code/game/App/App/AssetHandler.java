@@ -1,7 +1,6 @@
 package game.App.App;
 
-import game.App.Object.ObjectKey;
-import game.App.Object.SuperObject;
+import game.App.Object.*;
 
 public class AssetHandler {
     private GamePanel gamePanel;
@@ -28,31 +27,26 @@ public class AssetHandler {
      */
     public void setObject() {
         ObjectKey tmpObjectKey = new ObjectKey();
+        ObjectDoor tmpObjectDoor = new ObjectDoor();
+        ObjectAdventurersBackpack tmpObjectAdventurersBackpack = new ObjectAdventurersBackpack();
+        ObjectBoots tmpObjectBoots = new ObjectBoots();
 
         //DEMO CODE START
-        tmpObjectKey.setWorldX(2 * gamePanel.getTileSize());
-        tmpObjectKey.setWorldY(2 * gamePanel.getTileSize());
-        placeObjectAtIndex(new ObjectKey(tmpObjectKey), 0);
+        tmpObjectAdventurersBackpack.setWorldX(6 * gamePanel.getTileSize());
+        tmpObjectAdventurersBackpack.setWorldY(6 * gamePanel.getTileSize());
+        placeObjectAtIndex(new ObjectAdventurersBackpack(tmpObjectAdventurersBackpack), 0);
 
-        tmpObjectKey.setWorldX(8 * gamePanel.getTileSize());
-        tmpObjectKey.setWorldY(8 * gamePanel.getTileSize());
+        tmpObjectKey.setWorldX(10 * gamePanel.getTileSize());
+        tmpObjectKey.setWorldY(10 * gamePanel.getTileSize());
         placeObjectAtIndex(new ObjectKey(tmpObjectKey), 1);
 
-        tmpObjectKey.setWorldX(16 * gamePanel.getTileSize());
-        tmpObjectKey.setWorldY(16 * gamePanel.getTileSize());
-        placeObjectAtIndex(new ObjectKey(tmpObjectKey), 2);
+        tmpObjectDoor.setWorldX(8 * gamePanel.getTileSize());
+        tmpObjectDoor.setWorldY(12 * gamePanel.getTileSize());
+        placeObjectAtIndex(new ObjectDoor(tmpObjectDoor), 2);
 
-        tmpObjectKey.setWorldX(32 * gamePanel.getTileSize());
-        tmpObjectKey.setWorldY(32 * gamePanel.getTileSize());
-        placeObjectAtIndex(new ObjectKey(tmpObjectKey), 3);
-
-        tmpObjectKey.setWorldX(40 * gamePanel.getTileSize());
-        tmpObjectKey.setWorldY(40 * gamePanel.getTileSize());
-        placeObjectAtIndex(new ObjectKey(tmpObjectKey), 4);
-
-        tmpObjectKey.setWorldX(2 * gamePanel.getTileSize());
-        tmpObjectKey.setWorldY(40 * gamePanel.getTileSize());
-        placeObjectAtIndex(new ObjectKey(tmpObjectKey), 5);
+        tmpObjectBoots.setWorldX(9 * gamePanel.getTileSize());
+        tmpObjectBoots.setWorldY(16 * gamePanel.getTileSize());
+        placeObjectAtIndex(new ObjectBoots(tmpObjectBoots), 3);
         //DEMO CODE END
     }
 }
