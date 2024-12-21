@@ -19,5 +19,6 @@ Struktur:
                                 erstellt mit features (Player Character, Bewegung, + simple game-map) |
 | 18.12.2024 | ~60 min | alle  | Team meeting für Unterteilung der Arbeit, es wurde beschlossen wer welchen der nächsten Arbeitspackete machen soll |
 | 20.12.2024 | ??????? | Nazari |
-| 20.12.2024 | ??????? | Wang |
+| 20.12.2024 | 120 min | Wang | Collision erstellt
 | 21.12.2024 | ~90 min | Talab | Error-checking und coding conventions überall korrigiert (comments, getters & setters)
+| 21.12.2024 | ~15 min | Wang | Collision verbesserung + Kommentar hinzufügt
