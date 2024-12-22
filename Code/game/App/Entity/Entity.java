@@ -7,6 +7,7 @@ public abstract class Entity {
     private String name;
     protected int worldX, worldY, speed;
     private Rectangle solidArea;
+    private int solidAreaDefaultX, solidAreaDefaultY;
     private boolean collisionOn = false;
     private String direction;
 
@@ -19,7 +20,12 @@ public abstract class Entity {
     public void setSolidAreaHeight(int h) {solidArea.height = h;}
     public void setCollisionOn(boolean new_collision) {this.collisionOn = new_collision;}
     public void setDirection(String new_direction) {this.direction = new_direction;}
-
+    protected void setSolidAreaDefaultX(int new_solidAreaDefaultX) {
+        this.solidAreaDefaultX = new_solidAreaDefaultX;
+    }
+    protected void setSolidAreaDefaultY(int new_solidAreaDefaultY) {
+        this.solidAreaDefaultY = new_solidAreaDefaultY;
+    }
 
     // Getters
     public String getName() {
@@ -42,6 +48,12 @@ public abstract class Entity {
     }
     public String getDirection() {
         return direction;
+    }
+    public int getSolidAreaDefaultX() {
+        return solidAreaDefaultX;
+    }
+    public int getSolidAreaDefaultY() {
+        return solidAreaDefaultY;
     }
 
     // Other Methods
