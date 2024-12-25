@@ -14,15 +14,15 @@ import java.text.DecimalFormat;
 
 public class UserInterface {
 
-    GamePanel gamePanel;
-    Font arial_40, arial_80B;
-    BufferedImage keyImage;
-    public boolean messageOn = false;
-    public String message = "";
-    int messageCounter = 0;
-    public boolean gameFinished = false;
-    double playTime;
-    DecimalFormat dFormat = new DecimalFormat("#0.00");
+    private GamePanel gamePanel;
+    private Font arial_40, arial_80B;
+    private BufferedImage keyImage;
+    private  boolean messageOn = false;
+    private String message = "";
+    private int messageCounter = 0;
+    private boolean gameFinished = false;
+    private double playTime;
+    private DecimalFormat dFormat = new DecimalFormat("#0.00");
 
     public UserInterface(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -32,6 +32,11 @@ public class UserInterface {
         keyImage = key.getImage();
     }
 
+    // Setter
+    public void setGameFinished(boolean gameFinished) {
+        this.gameFinished = gameFinished;
+    }
+
     public void showMassage(String text) {
         this.message = text;
         this.messageOn = true;
@@ -39,7 +44,7 @@ public class UserInterface {
 
     public void draw(Graphics2D graphics2D){ // to display the Kay that player has
 
-        if(gameFinished == true) {
+        if(gameFinished) {
 
             graphics2D.setFont(arial_40);
             graphics2D.setColor(Color.white);
@@ -71,21 +76,21 @@ public class UserInterface {
             graphics2D.drawString(text, x, y);
 
 
-            gamePanel.gameThread = null; // to stop the game
+            gamePanel.killGameThread();
 
 
         } else {
             graphics2D.setFont(arial_40);
             graphics2D.setColor(Color.white);
             graphics2D.drawImage(keyImage, gamePanel.getTileSize()/2, gamePanel.getTileSize()/2, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
-            graphics2D.drawString("x " + gamePanel.getPlayer().keys,74,65);
+            graphics2D.drawString("x " + gamePanel.getPlayer().getKeys(),74,65);
 
             // TIME
             playTime += (double) 1/60;
             graphics2D.drawString("Time:" + dFormat.format(playTime), gamePanel.getTileSize()*11, 65);
 
             // MESSAGE
-            if(messageOn == true) {
+            if(messageOn) {
                 graphics2D.setFont(graphics2D.getFont().deriveFont(30F));
                 graphics2D.drawString(message, gamePanel.getTileSize() / 2, gamePanel.getTileSize() * 5);
 

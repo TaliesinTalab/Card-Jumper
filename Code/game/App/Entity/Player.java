@@ -18,7 +18,7 @@ public class Player extends Entity {
     private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     private int spriteCounter = 0;
     private int spriteNumber = 1;
-    public int keys = 0;
+    private int keys = 0;
 
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -73,7 +73,9 @@ public class Player extends Entity {
         calculateFullHealth();
         this.health = this.fullHealth;
     }
-
+    public void setKeys(int keys) {
+        this.keys = keys;
+    }
 
     // Getter
     public int getStrength() {return this.strength;}
@@ -86,6 +88,9 @@ public class Player extends Entity {
     public int getFullHealth() {return this.fullHealth;}
     public int getScreenX() { return this.screenX;}
     public int getScreenY() { return this.screenY;}
+    public int getKeys() {
+        return this.keys;
+    }
 
     /**
      * This function simply assigns the player character his sprites. If we change a sprite or add one, then
@@ -240,7 +245,7 @@ public class Player extends Entity {
                     gamePanel.getUserInterface().showMassage("Speed up!");
                     break;
                 case "Adventurer's Backpack":
-                    gamePanel.getUserInterface().gameFinished = true;
+                    gamePanel.getUserInterface().setGameFinished(true);
                     gamePanel.stopMusic();
                     gamePanel.playSE(4);
                     break;

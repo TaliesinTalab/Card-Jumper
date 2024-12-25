@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
-    public Thread gameThread; // We are using threads so that the game continues even if the player is idle
+    private Thread gameThread; // We are using threads so that the game continues even if the player is idle
     private KeyHandler keyHandler = new KeyHandler(); // This is needed for us to read inputs
     private Player player = new Player(this, keyHandler);
     private TileManager tileManager = new TileManager(this); //responsible for the game-map being rendered
@@ -75,6 +75,9 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetHandler getAssetHandler() {
         return assetHandler;
     }
+    public Thread getGameThread() {
+        return this.gameThread;
+    }
     public UserInterface getUserInterface() { return userInterface; }
 
     //Setters
@@ -83,6 +86,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 // Other Methods
+
+    public void killGameThread() {
+        this.gameThread = null;
+    }
 
     /**
      * Loads objects into the placedObjects Array
