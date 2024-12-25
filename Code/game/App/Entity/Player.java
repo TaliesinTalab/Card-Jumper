@@ -18,7 +18,7 @@ public class Player extends Entity {
     private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     private int spriteCounter = 0;
     private int spriteNumber = 1;
-    private int keys = 0;
+    public int keys = 0;
 
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -219,13 +219,30 @@ public class Player extends Entity {
             switch (objectName) {
                 case "Key":
                     keys++;
+                    gamePanel.playSE(2);
                     gamePanel.getAssetHandler().placeObjectAtIndex(null, index);
+                    gamePanel.getUserInterface().showMassage("You got a key!");
                     break;
                 case "Door":
                     if(keys > 0) {
+                        gamePanel.playSE(1);
                         gamePanel.getAssetHandler().placeObjectAtIndex(null, index);
                         keys--;
+                        gamePanel.getUserInterface().showMassage("You opened the door!");
+                    } else {
+                        gamePanel.getUserInterface().showMassage("You need a key!");
                     }
+                    break;
+                case "Boots":
+                    speed +=2;
+                    gamePanel.playSE(3);
+                    gamePanel.getAssetHandler().placeObjectAtIndex(null, index);
+                    gamePanel.getUserInterface().showMassage("Speed up!");
+                    break;
+                case "Adventurer's Backpack":
+                    gamePanel.getUserInterface().gameFinished = true;
+                    gamePanel.stopMusic();
+                    gamePanel.playSE(4);
                     break;
             }
         }
