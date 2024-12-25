@@ -68,7 +68,7 @@ public class UserInterface {
 
             graphics2D.setFont(arial_80B);
             graphics2D.setColor(Color.black);
-            text = "Congratulation!";
+            text = "Congratulations!";
             textLenght = (int)graphics2D.getFontMetrics().getStringBounds(text, graphics2D).getWidth();
 
             x = gamePanel.getScreenWidth()/2 - textLenght/2;
