@@ -113,7 +113,7 @@ public class Player extends Entity {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try{
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/"+imageName+" .png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/" + imageName + ".png")));
             image = uTool.scaleImage(image,gamePanel.getTileSize(),gamePanel.getTileSize());
 
         }catch(IOException e){
