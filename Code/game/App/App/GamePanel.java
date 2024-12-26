@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread; // We are using threads so that the game continues even if the player is idle
-    private KeyHandler keyHandler = new KeyHandler(); // This is needed for us to read inputs
+    private KeyHandler keyHandler = new KeyHandler(this); // This is needed for us to read inputs
     private Player player = new Player(this, keyHandler);
     private TileManager tileManager = new TileManager(this); //responsible for the game-map being rendered
     private CollisionChecker collisionChecker = new CollisionChecker(this);
@@ -35,6 +35,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     // GAME SETTINGS
     private final int fps = 60;
+
+
+    //GAME STATE
+    private int gameState;
+    private final int playState = 1;
+    private final int pauseState = 2;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -79,11 +85,15 @@ public class GamePanel extends JPanel implements Runnable {
         return this.gameThread;
     }
     public UserInterface getUserInterface() { return userInterface; }
+    public int getGameState() {return gameState;}
+    public int getPlayState() {return playState;}
+    public int getPauseState() {return pauseState;}
 
     //Setters
     public void setPlacedObjects(SuperObject[] placedObjects) {
         this.placedObjects = placedObjects;
     }
+    public void setGameState(int gameState) {this.gameState = gameState;}
 
 // Other Methods
 
@@ -97,6 +107,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         assetHandler.setObject();
         playMusic(0);
+        gameState = playState;
     }
 
     /**
@@ -135,6 +146,15 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
     public void update() {
+
+        if(gameState == playState){
+            player.update();
+
+        }
+        if(gameState == pauseState){
+            //nothing gonna update
+        }
+
         player.update();
     }
 

@@ -4,9 +4,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-
+    GamePanel gamePanel;
     private boolean upPressed, downPressed, leftPressed, rightPressed;
     private boolean checkDrawTime;
+
+    public KeyHandler(GamePanel gamePanel){
+        this.gamePanel=gamePanel;
+    }
 
     // Getter
     public boolean getUpPressed() {
@@ -21,9 +25,7 @@ public class KeyHandler implements KeyListener {
     public boolean getRightPressed() {
         return rightPressed;
     }
-    public boolean isCheckDrawTime() {
-        return checkDrawTime;
-    }
+    public boolean isCheckDrawTime() {return checkDrawTime;}
 
 
 
@@ -43,6 +45,13 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_S) {downPressed = true;}
         if (code == KeyEvent.VK_A) {leftPressed = true;}
         if (code == KeyEvent.VK_D) {rightPressed = true;}
+        if (code == KeyEvent.VK_P) {
+            if(gamePanel.getGameState()==gamePanel.getPlayState()){
+                gamePanel.setGameState(gamePanel.getPauseState());
+            }else if(gamePanel.getGameState()==gamePanel.getPauseState()){
+                gamePanel.setGameState(gamePanel.getPlayState());
+            }
+        }
 
 
         //DEBUG (since it`s a debug tool, it`s better to switch it on and off
