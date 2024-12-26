@@ -28,7 +28,7 @@ public class UserInterface {
         this.gamePanel = gamePanel;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
-        ObjectKey key = new ObjectKey();
+        ObjectKey key = new ObjectKey(gamePanel);
         keyImage = key.getImage();
     }
 

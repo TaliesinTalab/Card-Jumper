@@ -1,6 +1,7 @@
 package game.App.Object;
 
 import game.App.App.GamePanel;
+import game.App.App.UtilityTool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,6 +14,7 @@ public class SuperObject {
     private int worldX, worldY;
     private Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     private int solidAreaDefaultX = 0, solidAreaDefaultY = 0;
+    UtilityTool uTool= new UtilityTool();
 
     /**
      * Draws objects on screen

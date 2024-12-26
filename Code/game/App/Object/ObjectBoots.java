@@ -1,15 +1,20 @@
 package game.App.Object;
 
+import game.App.App.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.Objects;
 
 public class ObjectBoots extends SuperObject {
-    public ObjectBoots(){
+    GamePanel gamePanel;
+    public ObjectBoots(GamePanel gamePanel){
         setName("Boots");
+        this.gamePanel = gamePanel;
 
         try {
             setImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/boots.png"))));
+            uTool.scaleImage(getImage(),gamePanel.getTileSize(),gamePanel.getTileSize());
         } catch(IOException e) {
             e.printStackTrace();
         }

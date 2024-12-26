@@ -26,10 +26,10 @@ public class AssetHandler {
      * uses placeObjectAtIndex() to initiate the placedObjects array ( --> GamePanel.setupGame() )
      */
     public void setObject() {
-        ObjectKey tmpObjectKey = new ObjectKey();
-        ObjectDoor tmpObjectDoor = new ObjectDoor();
-        ObjectAdventurersBackpack tmpObjectAdventurersBackpack = new ObjectAdventurersBackpack();
-        ObjectBoots tmpObjectBoots = new ObjectBoots();
+        ObjectKey tmpObjectKey = new ObjectKey(gamePanel);
+        ObjectDoor tmpObjectDoor = new ObjectDoor(gamePanel);
+        ObjectAdventurersBackpack tmpObjectAdventurersBackpack = new ObjectAdventurersBackpack(gamePanel);
+        ObjectBoots tmpObjectBoots = new ObjectBoots(gamePanel);
 
         //DEMO CODE START
         tmpObjectAdventurersBackpack.setWorldX(6 * gamePanel.getTileSize());
