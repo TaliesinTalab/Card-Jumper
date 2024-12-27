@@ -61,7 +61,7 @@ public class Player extends Entity {
     public void setDefaultValues(){
         this.worldX = gamePanel.getTileSize() * 23; // starting position
         this.worldY = gamePanel.getTileSize() * 21;
-        this.speed = 2;
+        this.speed = 3;
         setDirection("down");
         this.strength = 1;
         this.intelligence = 1;
@@ -223,7 +223,8 @@ public class Player extends Entity {
     public void pickUpObject(int index) {
         if(index != 999) {
 
-    }}
+        }
+    }
 
     /**
      * This is responsible for the actual changing of sprites when the player does something. For example, it

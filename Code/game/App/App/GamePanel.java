@@ -148,11 +148,12 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
 
         if(gameState == playState){
+            if (!sound.isRunning()) sound.play(); //replace later if needed, continues music if paused
             player.update();
 
         }
-        if(gameState == pauseState){
-            //nothing gonna update
+        if (gameState == pauseState){
+            if (sound.isRunning()) sound.stop(); //replace later if needed, pauses music if paused
         }
 
 

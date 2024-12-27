@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
 public class UserInterface {
 
     private GamePanel gamePanel;
-    Graphics2D g2d;
+    private Graphics2D g2d;
     private Font arial_40, arial_80B;
     private boolean messageOn = false;
     private String message = "";
